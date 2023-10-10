@@ -17,21 +17,27 @@ public class Animal {
         return animalID;
     }
     public void setAnimalID(String animalID) {
+
         this.animalID = animalID;
     }
     public String getAnimalName() {
+
         return animalName;
     }
     public void setAnimalName(String animalName) {
+
         this.animalName = animalName;
     }
     public Date getAnimalBirthDate() {
+
         return animalBirthDate;
     }
     public void setAnimalBirthDate(Date animalBirthDate) {
+
         this.animalBirthDate = animalBirthDate;
     }
     public String getAnimalColor() {
+
         return animalColor;
     }
     public void setAnimalColor(String animalColor) {
@@ -41,18 +47,23 @@ public class Animal {
         return animalGender;
     }
     public void setAnimalGender(char animalGender) {
+
         this.animalGender = animalGender;
     }
     public float getAnimalWeight() {
+
         return animalWeight;
     }
     public void setAnimalWeight(float animalWeight) {
+
         this.animalWeight = animalWeight;
     }
     public String getArrivingFrom() {
+
         return arrivingFrom;
     }
     public void setArrivingFrom(String arrivingFrom) {
+
         this.arrivingFrom = arrivingFrom;
     }
     // Create a getter.
@@ -60,6 +71,7 @@ public class Animal {
     // is this method used with objects.
 
     public int getNumOfAnimals() {
+
         return numOfAnimals;
     }
 

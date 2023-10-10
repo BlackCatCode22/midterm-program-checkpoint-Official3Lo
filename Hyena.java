@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 public class Hyena extends Animal {
     // Create a static member variable that accumulates the number of hyenas created.
     private static int numOfHyenas = 0;
@@ -26,7 +27,7 @@ public class Hyena extends Animal {
    // Create a method that input hyena names from a file named: animalNames.txt
    public static void inputHyenaNames()  {
        // Define the file path
-       String filePath = "C:\\Users\\BE218\\javaDataFiles\\animalNames.txt";
+       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\animalNames.txt";
 
        try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
             Scanner scanner = new Scanner(System.in)) {
