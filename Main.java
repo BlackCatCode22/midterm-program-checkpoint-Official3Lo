@@ -1,4 +1,3 @@
-//https://github.com/BlackCatCode22/tJavaMidtermCheckPoint
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,7 +8,11 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.time.*;
+import java.math.*;
+import java.util.*;
 
 public class Main {
     // Creating the genUniqueID method
@@ -30,8 +33,6 @@ public class Main {
         }
         return prefix + Integer.valueOf(suffix);
     }
-
-
     public static void main(String[] args) {
         System.out.println("********************************");
         System.out.println("* Welcome to Sit's and Heng's Zoo Program *");
@@ -42,6 +43,7 @@ public class Main {
             Tiger.inputTigerNames();
             Bear.inputBearNames();
             Hyena.inputHyenaNames();
+
 
             // Open a csv file using the split() method on a string object
             String path = "C:\\Users\\ericl\\IdeaProjects\\x\\src\\arrivingAnimals.txt"; //change all pathfile on classes
@@ -60,14 +62,25 @@ public class Main {
                     //Create another String array name to read the start of each split from myarrayofanimaldata
                     String[] myArrayOfAgeGenderSpecie = myArrayOfAnimalData[0].split(" ");//this is the assign for reading the line before ","
 
+                    //Create instance for text animal data V
+                    String age = myArrayOfAgeGenderSpecie[0];
+                    String years = myArrayOfAgeGenderSpecie[1];
+                    String old = myArrayOfAgeGenderSpecie[2];
+                    String gender = myArrayOfAgeGenderSpecie[3];
+                    String specie = myArrayOfAgeGenderSpecie[4];
+
+                    //call private methods for gens
+                    String genUniqueID = Main.genUniqueID(specie, myCounter);
+                    /*
                     System.out.println("\nText for Age: " + myArrayOfAgeGenderSpecie[0]);
                     System.out.println("\nText for Years: " + myArrayOfAgeGenderSpecie[1]);
                     System.out.println("\nText for Old: " + myArrayOfAgeGenderSpecie[2]);
                     System.out.println("\nText for Gender: " + myArrayOfAgeGenderSpecie[3]);
                     System.out.println("\nText for Specie: " + myArrayOfAgeGenderSpecie[4]);
+                    */
 
                     //output
-                    System.out.println("\nSpecie: " + myArrayOfAgeGenderSpecie[4]);
+                    System.out.println("\nSpecie: " + specie + " | " + "Anim ID: " + genUniqueID);
 
                     System.out.println("Animal Number: " + myCounter + "\n*********************");
                     System.out.println("\nmyArrayOfAnimalData[0] is " + myArrayOfAnimalData[0]); //reads before , all words
@@ -120,8 +133,6 @@ public class Main {
                     }
                     else if(birthSeason.contains("summer")){
                         myAnimalBD = "Jun 21, " + animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
                         //Define
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         //parse string
@@ -136,8 +147,6 @@ public class Main {
                     }
                     else if(birthSeason.contains("fall")){
                         myAnimalBD = "Aug 21, " + animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
                         //Define
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         //parse string
@@ -152,8 +161,6 @@ public class Main {
                     }
                     else if(birthSeason.contains("winter")){
                         myAnimalBD = "Dec 21, " + animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
                         //Define
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         //parse string
@@ -168,8 +175,6 @@ public class Main {
                     }
                     else if(birthSeason.contains("unknown")){
                         myAnimalBD = "Jan 21, " + animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
                         //Define
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         //parse string
@@ -184,8 +189,6 @@ public class Main {
                     }
                     else {
                         myAnimalBD = "Unable to process..."+ animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
                         //Define
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         //parse string
