@@ -22,10 +22,10 @@ public class Main {
         if (theSpecies.contains("tiger")) {
             prefix = "Ti";
         }
-        if (theSpecies.contains("Lion")) {
+        if (theSpecies.contains("lion")) {
             prefix = "Li";
         }
-        if (theSpecies.contains("Bear")) {
+        if (theSpecies.contains("bear")) {
             prefix = "Br";
         }
         return prefix + Integer.valueOf(suffix);
@@ -43,9 +43,8 @@ public class Main {
             Bear.inputBearNames();
             Hyena.inputHyenaNames();
 
-
             // Open a csv file using the split() method on a string object
-            String path = "C:\\Users\\BE218\\IdeaProjects\\untitled\\arrivingAnimals.txt"; //change all pathfile on classes
+            String path = "C:\\Users\\ericl\\IdeaProjects\\x\\src\\arrivingAnimals.txt"; //change all pathfile on classes
             String myFileLine = "";
 
             try {
@@ -103,7 +102,6 @@ public class Main {
                     System.out.println("\nbirthSeason is: " + birthSeason + "\n\n");
 
                     //String myAnimalBD = " ";
-
                     if (birthSeason.contains("spring")) {
                         myAnimalBD = "March 21, " + animalYearsOfBirthDate;
                         //calculate anim age
@@ -119,7 +117,6 @@ public class Main {
                         long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
                         System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
                         System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-
                     }
                     else if(birthSeason.contains("summer")){
                         myAnimalBD = "Jun 21, " + animalYearsOfBirthDate;
@@ -213,23 +210,6 @@ public class Main {
                     //print date
                     System.out.println("Todays Date: " + today);
                     System.out.println("Date: " + myArrayOfAgeGenderSpecie[0] + " years ago " + yearsAgo);
-
-                /*
-                String myStr = myArrayOfAnimalData[0];
-                System.out.println("\nmyArrayOfAnimalData[0] is " + myArrayOfAnimalData[0]);
-                myArrayOfAnimalData = myStr.split(" "); //this reads in sequence of each word by spaces
-                String mySpecies = myArrayOfAnimalData[4];
-                System.out.println("\nmyArrayOfAnimalData[4] is " + myArrayOfAnimalData[4]);
-                System.out.println("\n myStr = " + myStr);
-                */
-
-                /*
-                System.out.println(" First element: " + myArrayOfAnimalData[0]);
-                System.out.println(" Second element: " + myArrayOfAnimalData[1]);
-                System.out.println(" Third item: " + myArrayOfAnimalData[2]);
-                System.out.println(" Fourth element: " + myArrayOfAnimalData[3]);
-                System.out.println(" Fifth item: " + myArrayOfAnimalData[4]);
-                */
 
                 }
             } catch (IOException e) {
