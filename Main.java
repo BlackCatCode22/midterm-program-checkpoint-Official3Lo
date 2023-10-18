@@ -1,224 +1,259 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Calendar;
 import java.time.LocalDate;
-import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.time.*;
-import java.math.*;
-import java.util.*;
+
+
+
+
+// Main.java
+// Driver class for the Zoo program
+// dH
+// 9/26/23
+
+// updated Oct 5, 2023
+// Updated Oct 17
+// last update before code presentation on Oct 19 at 10:15 AM
+
 
 public class Main {
+
     // Creating the genUniqueID method
     private static String genUniqueID(String theSpecies, int numOfSpecies) {
         String prefix = "";
-        int suffix = numOfSpecies + 1;
+        int suffix = numOfSpecies;
+
         if (theSpecies.contains("hyena")) {
             prefix = "Hy";
         }
-        if (theSpecies.contains("tiger")) {
-            prefix = "Ti";
-        }
-        if (theSpecies.contains("lion")) {
+        else if (theSpecies.contains("lion")) {
             prefix = "Li";
         }
-        if (theSpecies.contains("bear")) {
-            prefix = "Br";
+        else if (theSpecies.contains("tiger")) {
+            prefix = "Ti";
         }
+        else if (theSpecies.contains("bear")) {
+            prefix = "Be";
+        }
+        else {
+            prefix = "XX";
+        }
+
         return prefix + Integer.valueOf(suffix);
     }
+
+    private static LocalDate calcBirthdate(int yearsOld, String birthSeason) {
+
+        int year = 2023 - yearsOld;
+        String monthDay;
+        String newDate;
+
+        switch (birthSeason) {
+            case "spring":
+                monthDay = "03-21";
+                break;
+            case "summer":
+                monthDay = "06-21";
+                break;
+            case "fall":
+                monthDay = "09-21";
+                break;
+            case "winter":
+                monthDay = "12-21";
+                break;
+            default:
+                monthDay = "01-01";
+                break;
+        }
+        newDate =  Integer.toString(year) + "-" + monthDay;
+
+        // Create a LocalDate object
+        LocalDate birthDate = LocalDate.parse(newDate);
+
+        return birthDate;
+    }
+
+    public static double calculateAgeInDecimalYears(LocalDate animalArrivalDate, LocalDate birthDate) {
+        long yearsDifference = ChronoUnit.YEARS.between(birthDate, animalArrivalDate);
+
+        LocalDate adjustedBirthDate = birthDate.plusYears(yearsDifference);
+
+        long daysInCurrentYear = (animalArrivalDate.isLeapYear()) ? 366 : 365;
+        long daysDifference = ChronoUnit.DAYS.between(adjustedBirthDate, animalArrivalDate);
+
+        return yearsDifference + (double) daysDifference / daysInCurrentYear;
+    }
+
     public static void main(String[] args) {
-        System.out.println("********************************");
-        System.out.println("* Welcome to Sit's and Heng's Zoo Program *");
-        System.out.println("********************************\n");
-            // Load all species classes with name.
-            // Call the static methods to create a lists of names.****
-            Lion.inputLionNames();//VVV calling... VVV
-            Tiger.inputTigerNames();
-            Bear.inputBearNames();
-            Hyena.inputHyenaNames();
+
+        System.out.println("\n\n Welcome to my Zoo Program\n\n");
+
+        // Load all species classes with name.
+        // Call the static methods to create a lists of names.
+        Lion.inputLionNames();
+        Tiger.inputTigerNames();
+        Bear.inputBearNames();
+        Hyena.inputHyenaNames();
+
+        // Create ArrayLists to hold the animal objects.
+        ArrayList<Hyena> hyenaArrayList = new ArrayList<>();
+        ArrayList<Lion> lionArrayList = new ArrayList<>();
+        ArrayList<Tiger> tigerArrayList = new ArrayList<>();
+        ArrayList<Bear> bearArrayList = new ArrayList<>();
+
+        // Open a csv file using the split() method on a string object
+        String path = "C:\\Users\\ericl\\IdeaProjects\\x\\src\\arrivingAnimals.txt";
+        String myFileLine = "";
+
+        // Variables for constructing animal objects.
+        String animalID;
+        String animalName;
+        LocalDate animalBirthDate;
+        String animalColor;
+        String animalGender;
+        String animalWeight;
+        String animalFrom;
+        LocalDate animalArrivalDate;
+
+        // Variable that help us create animal data
+        int ageInYears = 0;
+        String species = "";
+        String birthSeason = "";
 
 
-            // Open a csv file using the split() method on a string object
-            String path = "C:\\Users\\ericl\\IdeaProjects\\x\\src\\arrivingAnimals.txt"; //change all pathfile on classes
-            String myFileLine = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+            int myCounter = 1;
+            while ((myFileLine = reader.readLine()) != null) {
+                // The input data from arrivingAnimals looks like this:
+                // 4 year old female hyena, born in spring, tan color, 70 pounds, from Friguia Park, Tunisia
 
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(path));
-                int myCounter = 0;
-                while ((myFileLine = reader.readLine()) != null) {
-                    //The input data of arrivingAnimals.txt looks like this
-                    //4 year old female hyena, born in spring, tan color, 70 pounds, from Friguia Park, Tunisia
+                // Create a String array named myArrayOfAnimalData
+                String[] myArrayOfAnimalData = myFileLine.split(",");
 
-                    //Create a String array name myArrayOfAnimalData
-                    String[] myArrayOfAnimalData = myFileLine.split(",");
+                // Create another String array named
+                String[] myArrayOfAgeGenderSpecies = myArrayOfAnimalData[0].split(" ");
 
-                    //Create another String array name to read the start of each split from myarrayofanimaldata
-                    String[] myArrayOfAgeGenderSpecie = myArrayOfAnimalData[0].split(" ");//this is the assign for reading the line before ","
+                // Get what we can from myArrayOfAgeGenderSpecies
+                ageInYears = Integer.parseInt(myArrayOfAgeGenderSpecies[0]);
+                animalGender = myArrayOfAgeGenderSpecies[3];
+                species = myArrayOfAgeGenderSpecies[4];
 
-                    //Create instance for text animal data V
-                    String age = myArrayOfAgeGenderSpecie[0];
-                    String years = myArrayOfAgeGenderSpecie[1];
-                    String old = myArrayOfAgeGenderSpecie[2];
-                    String gender = myArrayOfAgeGenderSpecie[3];
-                    String specie = myArrayOfAgeGenderSpecie[4];
+                // Split the next group of words by a space.
+                String[] myArrayOfBirthSeason = myArrayOfAnimalData[1].split(" ");
 
-                    //call private methods for gens
-                    String genUniqueID = Main.genUniqueID(specie, myCounter);
-                    /*
-                    System.out.println("\nText for Age: " + myArrayOfAgeGenderSpecie[0]);
-                    System.out.println("\nText for Years: " + myArrayOfAgeGenderSpecie[1]);
-                    System.out.println("\nText for Old: " + myArrayOfAgeGenderSpecie[2]);
-                    System.out.println("\nText for Gender: " + myArrayOfAgeGenderSpecie[3]);
-                    System.out.println("\nText for Specie: " + myArrayOfAgeGenderSpecie[4]);
-                    */
+                // Get birthSeason
+                birthSeason = myArrayOfBirthSeason[3];
 
-                    //output
-                    System.out.println("\nSpecie: " + specie + " | " + "Anim ID: " + genUniqueID);
+                // Get color.
+                animalColor = myArrayOfAnimalData[2];
 
-                    System.out.println("Animal Number: " + myCounter + "\n*********************");
-                    System.out.println("\nmyArrayOfAnimalData[0] is " + myArrayOfAnimalData[0]); //reads before , all words
-                    System.out.println("\nmyArrayOfAnimalData[1] is " + myArrayOfAnimalData[1]);
-                    System.out.println("\nmyArrayOfAnimalData[2] is " + myArrayOfAnimalData[2]);
-                    System.out.println("\nmyArrayOfAnimalData[3] is " + myArrayOfAnimalData[3]);
-                    System.out.println("\nmyArrayOfAnimalData[4] is " + myArrayOfAnimalData[4]);
-                    System.out.println("\nmyArrayOfAnimalData[5] is " + myArrayOfAnimalData[5]);
-                    //incrament for animal counter
-                    myCounter++;
+                // Get weight.
+                animalWeight = myArrayOfAnimalData[3];
 
-                    //Create a birthdate from the first 2 "," splits (a method) also using season
-                    Calendar calendar = Calendar.getInstance();
-                    Date today = calendar.getTime();
-                    //Set todays date
-                    LocalDate currentData = LocalDate.now();
-                    int year = currentData.getYear();
+                // Get from.
+                animalFrom = myArrayOfAnimalData[4] + ", " + myArrayOfAnimalData[5];
 
-                    //print out year
-                    System.out.println("Current year " + year);
+                // Calculate Animal BirthDate.
+                animalBirthDate = calcBirthdate(ageInYears, birthSeason);
 
-                    //Code up calculating animal age
-                    //animal age = now - animal birthdate
-                    String myAnimalBD = " ";
+                // Calculate Animal Arrival Date.
+                animalArrivalDate = LocalDate.now();
 
-                    int animalYearsOfBirthDate = year - Integer.parseInt(myArrayOfAgeGenderSpecie[0]);
+                if (species.contains("hyena")) {
+                    // create a hyena with what we have so far.
+                    Hyena myNewHyena = new Hyena("HYXX","a name", animalBirthDate, animalColor, animalGender,
+                            animalWeight,animalFrom,animalArrivalDate);
 
-                    //Split the next group of words
-                    String[] myArrayOfBirthSeason = myArrayOfAnimalData[1].split(" ");
+                    // Set animal ID by getting the static int numOfHyenas
+                    myNewHyena.setAnimalID("HY0" + Integer.toString(Hyena.getNumOfHyenas()));
 
-                    String birthSeason = myArrayOfBirthSeason[3];
-                    System.out.println("\nbirthSeason is: " + birthSeason + "\n\n");
+                    // Set hyena name by popping a name from the list in the Hyena class.
+                    myNewHyena.setAnimalName(Hyena.popHyenaName());
 
-                    //String myAnimalBD = " ";
-                    if (birthSeason.contains("spring")) {
-                        myAnimalBD = "March 21, " + animalYearsOfBirthDate;
-                        //calculate anim age
-                        // create localdata
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-                    else if(birthSeason.contains("summer")){
-                        myAnimalBD = "Jun 21, " + animalYearsOfBirthDate;
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-                    else if(birthSeason.contains("fall")){
-                        myAnimalBD = "Aug 21, " + animalYearsOfBirthDate;
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-                    else if(birthSeason.contains("winter")){
-                        myAnimalBD = "Dec 21, " + animalYearsOfBirthDate;
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-                    else if(birthSeason.contains("unknown")){
-                        myAnimalBD = "Jan 21, " + animalYearsOfBirthDate;
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-                    else {
-                        myAnimalBD = "Unable to process..."+ animalYearsOfBirthDate;
-                        //Define
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        //parse string
-                        LocalDate localDateAnimalBirthday = LocalDate.parse("Mar 21, 2017",formatter);
-                        //print
-                        System.out.println("Animal birthday "+localDateAnimalBirthday);
-                        //do the math
-                        //first argument is birthday and second argument is now
-                        long animalAgeInYears = ChronoUnit.YEARS.between(localDateAnimalBirthday,currentData);
-                        System.out.println("Animal birth date is: "+ myAnimalBD +"\n\n");
-                        System.out.println("\nAnimal age in years is: " + animalAgeInYears + "\n\n");
-                    }
-
-                    System.out.println("\nAnimal birth date is: " + myAnimalBD + "\n\n");
-
-                    //subtract 4 yrs
-                    calendar.add(Calendar.YEAR, -4);
-
-                    //set new date after sub
-                    Date yearsAgo = calendar.getTime();
-
-                    //print date
-                    System.out.println("Todays Date: " + today);
-                    System.out.println("Date: " + myArrayOfAgeGenderSpecie[0] + " years ago " + yearsAgo);
+                    // Add to the list of hyenas.
+                    hyenaArrayList.add(myNewHyena);
 
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+                else if (species.contains("lion")) {
+                    // create a lion with what we have so far.
+                    Lion myNewLion = new Lion("HYXX","a name", animalBirthDate, animalColor, animalGender,
+                            animalWeight,animalFrom,animalArrivalDate);
+
+                    // Set animal ID by getting the static int numOfHyenas
+                    myNewLion.setAnimalID("Li0" + Integer.toString(Lion.getNumOfLions()));
+
+                    // Set lion name by popping a name from the list in the Lion class.
+                    myNewLion.setAnimalName(Lion.popLionName());
+
+                    // Add to the list of lions.
+                    lionArrayList.add(myNewLion);
+
+                }
+                else if (species.contains("tiger")) {
+                    // create a tiger with what we have so far.
+                    Tiger myNewTiger = new Tiger("HYXX","a name", animalBirthDate, animalColor, animalGender,
+                            animalWeight,animalFrom,animalArrivalDate);
+
+                    // Set animal ID by getting the static int numOfHyenas
+                    myNewTiger.setAnimalID("Ti0" + Integer.toString(Tiger.getNumOfTigers()));
+
+                    // Set tiger name by popping a name from the list in the Tiger class.
+                    myNewTiger.setAnimalName(Tiger.popTigerName());
+
+                    // Add to the list of tigers.
+                    tigerArrayList.add(myNewTiger);
+
+                }
+                else if (species.contains("bear")) {
+                    // create a bear with what we have so far.
+                    Bear myNewBear = new Bear("HYXX","a name", animalBirthDate, animalColor, animalGender,
+                            animalWeight,animalFrom,animalArrivalDate);
+
+                    // Set animal ID by getting the static int numOfHyenas
+                    myNewBear.setAnimalID("Be0" + Integer.toString(Tiger.getNumOfTigers()));
+
+                    // Set bear name by popping a name from the list in the Bear class.
+                    myNewBear.setAnimalName(Bear.popBearName());
+
+                    // Add to the list of bears.
+                    bearArrayList.add(myNewBear);
+
+                }
+
+
+
             }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (Hyena aHyena : hyenaArrayList) {
+            System.out.println(aHyena.getAnimalID() + ", " + aHyena.getAnimalName() + ", " + aHyena.getAnimalColor());
+        }
+        System.out.println();
+        for (Lion aLion : lionArrayList) {
+            System.out.println(aLion.getAnimalID() + ", " + aLion.getAnimalName() + ", " + aLion.getAnimalColor());
+        }
+        System.out.println();
+        for (Tiger aTiger : tigerArrayList) {
+            System.out.println(aTiger.getAnimalID() + ", " + aTiger.getAnimalName() + ", " + aTiger.getAnimalColor());
+        }
+        System.out.println();
+        for (Bear aBear : bearArrayList) {
+            System.out.println(aBear.getAnimalID() + ", " + aBear.getAnimalName() + ", " + aBear.getAnimalColor());
+        }
+
     }
+
+
+
 
 }
 
