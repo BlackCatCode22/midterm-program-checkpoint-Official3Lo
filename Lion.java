@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+
 public class Lion extends Animal {
     // Create a static member variable that accumulates the number of hyenas created.
     private static int numOfLions = 0;
@@ -13,7 +16,7 @@ public class Lion extends Animal {
     private static List<String> myListOfLionNames = new ArrayList<>();
 
     // write a Getter method to look at the static int numOfHyenas
-    public static int getNumOfTigers() {
+    public static int getNumOfLions() {
         return numOfLions;
     }
 
@@ -23,10 +26,17 @@ public class Lion extends Animal {
         numOfLions++;
    }
 
+    public Lion(String aniID, String aniName, LocalDate aniBD, String aniColor, String aniGender,
+                 String aniWeight, String aniFrom, LocalDate arrivalDate) {
+        super(aniID, aniName, aniBD, aniColor, aniGender, aniWeight, aniFrom, arrivalDate);
+        numOfLions++;
+    }
+
+
    // Create a method that input tiger names from a file named: animalNames.txt
    public static void inputLionNames()  {
        // Define the file path
-       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\animalNames.txt";
+       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\src\\animalNames.txt";
 
        try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
             Scanner scanner = new Scanner(System.in)) {

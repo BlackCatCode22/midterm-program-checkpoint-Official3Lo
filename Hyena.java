@@ -4,11 +4,22 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+import java.time.LocalDate;
 public class Hyena extends Animal {
     // Create a static member variable that accumulates the number of hyenas created.
     private static int numOfHyenas = 0;
 
+    // Create a constructor that will increment numOfHyenas when a new Hyena object is created.
+    public Hyena() {
+        System.out.println("\n A new Hyena object was created!!!");
+
+    }
+
+    public Hyena(String aniID, String aniName, LocalDate aniBD, String aniColor, String aniGender,
+                 String aniWeight, String aniFrom, LocalDate arrivalDate) {
+        super(aniID, aniName, aniBD, aniColor, aniGender, aniWeight, aniFrom, arrivalDate);
+        numOfHyenas++;
+    }
 
     // Create an ArrayList to store the split values read from animalNames.txt
     private static List<String> myListOfHyenaNames = new ArrayList<>();
@@ -18,16 +29,12 @@ public class Hyena extends Animal {
         return numOfHyenas;
     }
 
-    // Create a constructor that will increment numOfHyenas when a new Hyena object is created.
-    public Hyena() {
-        System.out.println("\n A new Hyena object was created!!!");
-        numOfHyenas++;
-   }
+
 
    // Create a method that input hyena names from a file named: animalNames.txt
    public static void inputHyenaNames()  {
        // Define the file path
-       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\animalNames.txt";
+       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\src\\animalNames.txt";
 
        try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
             Scanner scanner = new Scanner(System.in)) {

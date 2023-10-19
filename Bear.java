@@ -1,9 +1,11 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 public class Bear extends Animal {
     // Create a static member variable that accumulates the number of hyenas created.
     private static int numOfBears = 0;
@@ -23,10 +25,18 @@ public class Bear extends Animal {
         numOfBears++;
    }
 
+    public Bear(String aniID, String aniName, LocalDate aniBD, String aniColor, String aniGender,
+                 String aniWeight, String aniFrom, LocalDate arrivalDate) {
+        super(aniID, aniName, aniBD, aniColor, aniGender, aniWeight, aniFrom, arrivalDate);
+    }
+
+
+
+
    // Create a method that input hyena names from a file named: animalNames.txt
    public static void inputBearNames()  {
        // Define the file path
-       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\animalNames.txt";
+       String filePath = "C:\\Users\\BE218\\IdeaProjects\\untitled\\src\\animalNames.txt";
 
        try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
             Scanner scanner = new Scanner(System.in)) {
